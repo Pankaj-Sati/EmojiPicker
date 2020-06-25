@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-menu-button autoHide="false"></ion-menu-button> 
+         <ion-back-button autoHide="false"></ion-back-button> 
+      </ion-buttons>
+    <ion-title>
+        Select Emoji
+    </ion-title>
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content>
+ 
+  <ion-row>
+    <ion-col size="12">
+      <!--EMOJI CATEGORIES-->
+
+      <div class="categoryContainer">
+        <div class="category" *ngFor="let item of emojiCategories" (click)="categoryChanged(item)">
+          <p>{{item.icon[0]}}</p>
+          <p>{{item.name}}</p>
+        </div>
+      </div>
+
+    </ion-col>
+    <ion-col size="12">
+      <!--CATEGORY CONTENT-->
+
+      <ion-row>
+        <ion-col size="1" *ngFor="let item of currentEmojiList">
+          <p style="margin:1px;">{{item[0]}}</p>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-col>
+  </ion-row>
+</ion-content>

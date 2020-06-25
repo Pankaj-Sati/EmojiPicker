@@ -1,17 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
+  <ion-button (click)="openEmojiPicker()">
+    <ion-icon name="happy" slot="icon-only"></ion-icon>
+  </ion-button>
 
   <div id="container">
     <strong>Ready to create an app?</strong>
