@@ -1,5 +1,7 @@
 {
   "name": "EmojiPicker",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
