@@ -8,12 +8,38 @@
 
 <ion-content [fullscreen]="true">
  
-  <ion-button (click)="openEmojiPicker()">
-    <ion-icon name="happy" slot="icon-only"></ion-icon>
-  </ion-button>
+  <ion-row>
+    <ion-col text-center>
+      <ion-button (click)="openEmojiPicker()">
+        <ion-icon name="happy" slot="start"></ion-icon> Emoji Modal
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
+<div id="container">
+    <strong>Emoji Picker Demo App</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
 </ion-content>
+<ion-footer>
+
+  <ion-row class="input-position">
+    <ion-col size="1">
+      <ion-icon (click)="showEmojiPicker = !showEmojiPicker" color="secondary" name="happy" style="zoom:2;"></ion-icon>
+    </ion-col>
+    <ion-col size="9">
+      <ion-input type="text" placeholder="Type a message" [(ngModel)]="newmessage" padding-start>
+    </ion-input>
+    </ion-col>
+    <ion-col size="2" text-right>
+        <ion-icon (click)="addmessage()" color="secondary" name="send" style="zoom:2;"></ion-icon>
+   
+    </ion-col>
+  </ion-row>
+
+  <div class="emojiContainer" [style.height]="showEmojiPicker?'300px':'0px'"> <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
+    <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
+  </div>
+
+</ion-footer>

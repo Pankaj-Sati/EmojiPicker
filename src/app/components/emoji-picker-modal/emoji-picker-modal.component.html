@@ -1,24 +1,12 @@
-<ion-header>
 
-  <ion-toolbar>
-      <ion-buttons slot="start">
-         <ion-menu-button autoHide="false"></ion-menu-button> 
-         <ion-back-button autoHide="false"></ion-back-button> 
-      </ion-buttons>
-    <ion-title>
-        Select Emoji
-    </ion-title>
-  </ion-toolbar>
-  
-</ion-header>
 <ion-content>
  
   <ion-row>
     <ion-col size="12">
       <!--EMOJI CATEGORIES-->
 
-      <div class="categoryContainer">
-        <div class="category" *ngFor="let item of emojiCategories" (click)="categoryChanged(item)">
+      <div class="categoryContainer" #categoryDiv>
+        <div  class="category" [class.selectedCategory]="currentCategoryName==item.name" *ngFor="let item of emojiCategories;let i=index;" (click)="categoryChanged(item,i)">
           <p>{{item.icon[0]}}</p>
           <p>{{item.name}}</p>
         </div>
@@ -28,11 +16,16 @@
     <ion-col size="12">
       <!--CATEGORY CONTENT-->
 
-      <ion-row>
-        <ion-col size="1" *ngFor="let item of currentEmojiList">
-          <p style="margin:1px;">{{item[0]}}</p>
-        </ion-col>
-      </ion-row>
+      <ion-slides #slides pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let item of emojiCategories">
+          <ion-row>
+            <ion-col size="1.5" *ngFor="let childItem of item.emojis" (click)="selectEmoji(childItem[0])">
+              <p style="margin:1px;">{{childItem[0]}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-slide>
+      </ion-slides>
+      
 
 
     </ion-col>
