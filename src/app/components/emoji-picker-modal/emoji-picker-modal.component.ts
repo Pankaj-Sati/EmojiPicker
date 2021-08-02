@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
 import { EMOJIS } from 'src/app/data/emoji.data';
 import { IonSlides, ModalController } from '@ionic/angular';
 
@@ -14,29 +14,53 @@ export class EmojiPickerModalComponent implements OnInit {
 @ViewChild('categoryDiv',{static:false}) categoryContainer:ElementRef;
 
 emojiCategories:any[]=[];
-mainEmojiData=EMOJIS;
+mainEmojiData=[];
 currentEmojiList:any[]=[];
 currentCategoryName:string='';
 
 @Input('isInModal') isInModal=false; //To determine whether this componet is created using a modal or not
 @Output('onEmojiSelect') selectionEvent=new EventEmitter(); //TO emmit event when an emoji is selected
-  constructor(private modalCtrl:ModalController) 
+  constructor(private modalCtrl:ModalController,
+    private _Cdr:ChangeDetectorRef) 
   {
+    
+  }
 
+
+  lazyLoadImages()
+  {
+    let currentIndex=0;
+    let addEmoji=()=>{
+      this.mainEmojiData.push(EMOJIS[currentIndex]); 
+      currentIndex++; 
+      this._Cdr.detectChanges();
+    };
+    let lazyFunction=()=>{
+      setTimeout(()=>{
+        if(currentIndex<EMOJIS.length)
+        {
+          addEmoji();
+          lazyFunction();
+        }
+        else
+        {
+          this.getEmojiCategories();
+        }    
+      });
+    };
+    addEmoji();
+    lazyFunction();
   }
 
   ngOnInit() 
   {
-    this.getEmojiCategories();
+    this.lazyLoadImages();
   }
 
   ngAfterViewInit()
   {
-    console.log('ngAfterViewInit');
-    this.setActiveCategorySlide();
     this.slides.ionSlideDidChange.subscribe(data=>
       {
-        console.log('Slide changed data',data);
         this.setActiveCategorySlide();
       })
   }
@@ -49,7 +73,7 @@ currentCategoryName:string='';
       });
       this.currentCategoryName=this.emojiCategories[0].name;
       this.currentEmojiList=this.emojiCategories[0].emojis;
-    
+      this.setActiveCategorySlide();
   }
 
   categoryChanged(selectedEmojiList,categoryIndex)

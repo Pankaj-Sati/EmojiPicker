@@ -1,5 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { EmojiPickerModalComponent } from 'src/app/components/emoji-picker-modal/emoji-picker-modal.component';
 
 @Component({
@@ -13,7 +13,7 @@ export class HomePage {
   newmessage:string=''; //Chat message
   showEmojiPicker=true; //To show/hide the emoji picker from footer
 
-  constructor(private modalCtrl:ModalController) 
+  constructor(private modalCtrl:ModalController,private navCtrl:NavController) 
   {
 
     //On Keyboard up event, hide the emoji picker
@@ -22,7 +22,6 @@ export class HomePage {
       console.log('keyboardWillShow');
       this.showEmojiPicker=false;
     });
-
   }
 
 
@@ -59,6 +58,11 @@ export class HomePage {
   addEmoji(event)
   {
     this.newmessage=this.newmessage+event.data; //Concatinate the emoji with text
+  }
+
+  openNewpage()
+  {
+    this.navCtrl.navigateForward('/demo');
   }
 
 }

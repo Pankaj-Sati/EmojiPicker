@@ -1,7 +1,7 @@
 
 <ion-content>
  
-  <ion-row>
+  <ion-row *ngIf="emojiCategories;else loader;">
     <ion-col size="12">
       <!--EMOJI CATEGORIES-->
 
@@ -25,9 +25,15 @@
           </ion-row>
         </ion-slide>
       </ion-slides>
-      
-
-
     </ion-col>
   </ion-row>
 </ion-content>
+
+<ng-template #loader>
+  <ion-row>
+    <ion-col size="12">
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-col>
+  </ion-row>
+ 
+</ng-template>
